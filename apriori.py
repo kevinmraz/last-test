@@ -6,6 +6,7 @@ Created on Wed May 16 14:44:21 2018
 """
 #change1~
 #change2~!!
+#change3 from another guy!!~
 import copy
 import itertools
 def f_1(T):
