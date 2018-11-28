@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-Created on Wed May 16 14:44:21 2018
+Created on Wed Nov 28 11:04:18 2018
 
 @author: kevinmraz
 """
-#change1~
-#change2~!!
-#change3 from another guy!!~
+
 import copy
 import itertools
 def f_1(T):
@@ -40,7 +38,7 @@ def apriori(D,min_sup):
                 if set1.issubset(set2):
                     count+=1
                    
-            if count*1.0/len(D)<min_sup:
+            if count*1.0/len(D)<=min_sup:
                 array.append(C[i])
         for l in range(len(array)):
             C.remove(array[l])       
@@ -119,32 +117,46 @@ def relation(F,con_min):
 #dict1={'a':'健康麦香包','b':'皮蛋瘦肉粥','c':'养颜红枣糕','d':'八宝粥','e':'香煎葱油饼'}
 #D = [['a','b','c'],['e','b','d'],['a','e','b','d'],['e','d']]
 #D=[['m','o','n','k','e','y'],['d','o','n','k','e','y'],['m','a','k','e'],['m','u','c','k','y'],['c','o','o','k','i','e']]
-#D=[['a','b','e'],['b','d'],['b','c'],['a','b','d'],['a','c'],['b','c'],['a','c'],['a','b','c','e'],['a','b','c']]
-D=[]
-with open('C://Users//1-c//Desktop//supermarket.csv','r') as f1:
-    items=f1.readline()
-    items_list=items.split(',')
-    items_list.pop()
-    list1=f1.readlines()
-    for l in list1:
-        index=[]
-        current_trans=[]
-        l=l.rstrip('\n')
-        l2=l.split(',')
-        for i in range(len(l2)):
-            if l2[i] == 't':
-                index.append(i)
-        for temp in index:
-            current_trans.append(items_list[temp])
-        D.append(current_trans)
-f1.close()
-F = apriori(D, 0.3)
-#print F
+D=[['a','b','e'],['b','d'],['b','c'],['a','b','d'],['a','c'],['b','c'],['a','c'],['a','b','c','e'],['a','b','c']]
+# D=[]
+# with open('C://Users//1-c//Desktop//supermarket.csv','r') as f1:
+#     items=f1.readline()
+#     items_list=items.split(',')
+#     items_list.pop()
+#     list1=f1.readlines()
+#     for l in list1:
+#         index=[]
+#         current_trans=[]
+#         l=l.rstrip('\n')
+#         l2=l.split(',')
+#         for i in range(len(l2)):
+#             if l2[i] == 't':
+#                 index.append(i)
+#         for temp in index:
+#             current_trans.append(items_list[temp])
+#         D.append(current_trans)
+# f1.close()
+F = apriori(D, 0)
+dic={}
+
+for f in F:
+    for d in D:
+        s=set(f)
+        S=set(d)
+        if s.issubset(S):
+            if str(f) not in dic:
+                dic[str(f)]=1
+            else:
+                dic[str(f)]+=1
+for f in F:
+    dic[str(f)]=dic[str(f)]*1.0/len(D)
+    print f,dic[str(f)]
+
 #for i in range(len(F)):
-#    print '[',
-#    for j in range(len(F[i])):
-#        print dict1[F[i][j]],
-#    print ']'
-table=relation(F,0.8)
-#for i in table:
-#    print i
+#   print '[',
+#   for j in range(len(F[i])):
+#       print dict1[F[i][j]],
+#   print ']'
+table=relation(F,0)
+for i in table:
+    print i
